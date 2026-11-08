@@ -1,0 +1,76 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+
+    "chat": {
+      "messages": {
+        ".read": true,
+        ".indexOn": ["timestamp"],
+
+        "$messageId": {
+          ".write": "!data.exists()",
+
+          ".validate": "newData.hasChildren(['text','senderUid','senderName','timestamp'])",
+
+          "text": {
+            ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 1000"
+          },
+          "senderUid": {
+            ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 100"
+          },
+          "senderName": {
+            ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 20"
+          },
+          "timestamp": {
+            ".validate": "newData.val() === now"
+          },
+          "replyTo": {
+            ".validate": "newData.hasChildren(['key','sender','text'])",
+            "key": { ".validate": "newData.isString()" },
+            "sender": { ".validate": "newData.isString() && newData.val().length <= 20" },
+            "text": { ".validate": "newData.isString() && newData.val().length <= 120" },
+            "$other": { ".validate": false }
+          },
+
+          "reactions": {
+            "$emoji": {
+              "$uid": {
+                ".write": true,
+                ".validate": "newData.hasChildren(['name','ts']) && newData.child('name').isString() && newData.child('name').val().length <= 20",
+                "name": { ".validate": "newData.isString() && newData.val().length <= 20" },
+                "ts": { ".validate": true },
+                "$other": { ".validate": false }
+              }
+            }
+          },
+
+          "$other": { ".validate": false }
+        }
+      },
+
+      "presence": {
+        ".read": true,
+        "$uid": {
+          ".write": true,
+          ".validate": "newData.hasChildren(['name','online'])",
+          "name": { ".validate": "newData.isString() && newData.val().length <= 20" },
+          "online": { ".validate": "newData.isBoolean()" },
+          "lastSeen": { ".validate": true },
+          "$other": { ".validate": false }
+        }
+      },
+
+      "typing": {
+        ".read": true,
+        "$uid": {
+          ".write": true,
+          ".validate": "newData.hasChildren(['name','ts'])",
+          "name": { ".validate": "newData.isString() && newData.val().length <= 20" },
+          "ts": { ".validate": true },
+          "$other": { ".validate": false }
+        }
+      }
+    }
+  }
+}
