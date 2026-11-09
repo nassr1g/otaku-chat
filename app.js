@@ -451,7 +451,7 @@
     replyBtn.title = 'رد';
     replyBtn.addEventListener('click', (e) => { e.stopPropagation(); startReply(key, data); closeActions(row); });
     const reactBtn = document.createElement('button');
-    reactBtn.textContent = '😊';
+    reactBtn.textContent = '❤';
     reactBtn.title = 'تفاعل';
     reactBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleReactionPicker(row, key); });
     actions.appendChild(replyBtn);
