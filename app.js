@@ -916,7 +916,7 @@
     setInterval(() => {
       if (Math.random() < 0.3) {
         const s = document.createElement('div');
-        s.textContent = ['🌸','🌺','⭐','✨'][Math.floor(Math.random()*4)];
+        s.textContent = '⭐';
         s.className = 'sakura';
         s.style.left = Math.random() * 100 + '%';
         s.style.fontSize = (Math.random()*10+14) + 'px';
